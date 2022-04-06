@@ -1,0 +1,97 @@
+Sub Create_Tables()
+
+DoCmd.RunSQL "CREATE TABLE PRODUIT(" & _
+   "id_produit INT," & _
+   "ref_produit VARCHAR(50) NOT NULL," & _
+   "nom_produit VARCHAR(50) NOT NULL," & _
+   "orig_produit VARCHAR(50) NOT NULL," & _
+   "PRIMARY KEY(id_produit)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE FOURNISSEUR(" & _
+   "id_four INT," & _
+   "nom_four VARCHAR(50) NOT NULL," & _
+   "adr_four VARCHAR(50) NOT NULL," & _
+   "cp_four INT NOT NULL," & _
+   "PRIMARY KEY(id_four)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE CLIENT(" & _
+   "id_client INT," & _
+   "nom_client VARCHAR(50) NOT NULL," & _
+   "cp_client VARCHAR(50) NOT NULL," & _
+   "adr_client VARCHAR(250) NOT NULL," & _
+   "PRIMARY KEY(id_client)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Role(" & _
+   "id_role INT," & _
+   "libelle VARCHAR(50) NOT NULL," & _
+   "PRIMARY KEY(id_role)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE COMMANDE(" & _
+   "id_comm INT," & _
+   "num_comm INT NOT NULL," & _
+   "PRIMARY KEY(id_comm)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE ELEARNING(" & _
+   "id_learn INT," & _
+   "nom_doc_learn VARCHAR(50) NOT NULL," & _
+   "duree_learn TIME," & _
+   "note_learn INT," & _
+   "PRIMARY KEY(id_learn)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE SALARIE(" & _
+   "id_salarie INT," & _
+   "nom_salarie VARCHAR(50) NOT NULL," & _
+   "prenom_salarie VARCHAR(50) NOT NULL," & _
+   "mail_salarie VARCHAR(50) NOT NULL," & _
+   "mdp_salarie VARCHAR(50) NOT NULL," & _
+   "id_role INT," & _
+   "PRIMARY KEY(id_salarie)," & _
+   "FOREIGN KEY(id_role) REFERENCES Role(id_role)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE VENDRE(" & _
+   "id_salarie INT," & _
+   "id_client INT," & _
+   "id_comm INT," & _
+   "PRIMARY KEY(id_salarie, id_client, id_comm)," & _
+   "FOREIGN KEY(id_salarie) REFERENCES SALARIE(id_salarie)," & _
+   "FOREIGN KEY(id_client) REFERENCES CLIENT(id_client)," & _
+   "FOREIGN KEY(id_comm) REFERENCES COMMANDE(id_comm)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE STOCKER(" & _
+   "id_produit INT," & _
+   "id_four INT," & _
+   "stock INT," & _
+   "prix_achat CURRENCY," & _
+   "dte_entree DATE," & _
+   "PRIMARY KEY(id_produit, id_four)," & _
+   "FOREIGN KEY(id_produit) REFERENCES PRODUIT(id_produit)," & _
+   "FOREIGN KEY(id_four) REFERENCES FOURNISSEUR(id_four)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE CONTENIR(" & _
+   "id_produit INT," & _
+   "id_comm INT," & _
+   "quantite INT," & _
+   "prix_vente CURRENCY," & _
+   "PRIMARY KEY(id_produit, id_comm)," & _
+   "FOREIGN KEY(id_produit) REFERENCES PRODUIT(id_produit)," & _
+   "FOREIGN KEY(id_comm) REFERENCES COMMANDE(id_comm)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Acceder(" & _
+   "id_role INT," & _
+   "id_learn INT," & _
+   "PRIMARY KEY(id_role, id_learn)," & _
+   "FOREIGN KEY(id_role) REFERENCES Role(id_role)," & _
+   "FOREIGN KEY(id_learn) REFERENCES ELEARNING(id_learn)" & _
+");"   
+
+End Sub

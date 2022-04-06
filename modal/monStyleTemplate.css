@@ -1,0 +1,25 @@
+body 
+{
+	position: absolute;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+    overflow: hidden;
+    background-color: white;
+}
+
+.ligneSaisie
+{
+	display: flex;
+	width: 100%;
+}
+
+.ligne_texte
+{
+	width: 30%;
+}
+
+.saisie_texte
+{
+	width: 60%;
+}
